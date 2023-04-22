@@ -1,12 +1,13 @@
 from aiogram import Router
 from aiogram.filters import Text
-from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
-from handlers.chatCommands.deleteCommand.choiceChat import deleteChoiceChat
+from aiogram.types import CallbackQuery
+
 from handlers.chatCommands.choiceCommand.choiceChat import choice
 from handlers.chatCommands.createCommand.askChatName import createGetName
-from middlewares.inCreateDialog import createCallbackQuery
+from handlers.chatCommands.deleteCommand.choiceChat import deleteChoiceChat
 from middlewares.inChatDialog import aiCallbackQuery
+from middlewares.inCreateDialog import createCallbackQuery
 
 router = Router()
 router.callback_query.middleware(createCallbackQuery())
@@ -29,5 +30,3 @@ async def createCallback(callback: CallbackQuery, state: FSMContext):
 async def deleteCallback(callback: CallbackQuery, state: FSMContext):
     await deleteChoiceChat(callback, state)
     await callback.answer()
-
-

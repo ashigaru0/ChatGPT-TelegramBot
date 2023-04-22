@@ -1,28 +1,28 @@
 import sqlite3
 
 
-def addUser(userId):
+async def addUser(userId):
     con = sqlite3.connect('databases/database.db')
     cur = con.cursor()
     result = cur.execute('''SELECT id FROM users
-                            WHERE id=?''', (userId, )).fetchall()
+                            WHERE id=?''', (userId,)).fetchall()
     if not result:
-        cur.execute('''INSERT INTO users(id) VALUES(?)''', (userId, ))
+        cur.execute('''INSERT INTO users(id) VALUES(?)''', (userId,))
     con.commit()
     con.close()
 
 
-def addChat(userId, name):
+async def addChat(userId, name):
     con = sqlite3.connect('databases/database.db')
     cur = con.cursor()
     chatsId = cur.execute('''SELECT chats_id FROM users
-                             WHERE id=?''', (userId, )).fetchone()
+                             WHERE id=?''', (userId,)).fetchone()
     cur.execute('''INSERT INTO chats(id, name) VALUES(?, ?)''', (chatsId[0], name))
     con.commit()
     con.close()
 
 
-def addDialog(userId, name, dialog):
+async def addDialog(userId, name, dialog):
     con = sqlite3.connect('databases/database.db')
     cur = con.cursor()
     chatsId = cur.execute('''SELECT chats_id FROM users

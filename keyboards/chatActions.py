@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from callbacks.choiceChat.callbacksFactory import CallbackFactoryForChoiceChat
+from callbacks.callbacksFactory import CallbackFactoryForChoiceChat
 
 
 def getKeyboardOutDialog():

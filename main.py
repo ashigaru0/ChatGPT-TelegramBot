@@ -1,17 +1,19 @@
 import asyncio
+from os import environ
 
-from aiogram import Bot, Dispatcher
+from aiogram import Dispatcher, Bot
 
 from callbacks import chatActions
-from callbacks.choiceChat import delete, create
-from callbacks.choiceChat.choiceCallbacks import choice, cancel
+from callbacks.createCallbacks import create
+from callbacks.deleteCallbacks import delete
+from callbacks.choiceCallbacks import cancel, choice
 from handlers import startCommands
 from handlers.chatCommands import createCommand, deleteCommand, choiceCommand, cancelCommand
 from handlers.chatCommands.choiceCommand import dialogWithAi
 
 
 async def main():
-    bot = Bot(token="6060375766:AAH2LawyLKjcc8ioCVkR2VWmTodymorU6oU", parse_mode='Html')
+    bot = Bot(token=environ.get('TG_CHATGPT_BOT_API'), parse_mode='Html')
     dp = Dispatcher()
     dp.include_router(startCommands.router)
     dp.include_router(cancelCommand.router)
@@ -27,4 +29,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-    print()

@@ -1,19 +1,20 @@
 import sqlite3
+
 import yaml
 
 
-def getChat(userId):
+async def getChat(userId):
     con = sqlite3.connect('databases/database.db')
     cur = con.cursor()
     result = cur.execute('''SELECT name FROM chats
                             WHERE id=(
                             SELECT chats_id FROM users
-                            WHERE id=?)''', (userId, )).fetchall()
+                            WHERE id=?)''', (userId,)).fetchall()
     con.close()
     return [name[0] for name in result]
 
 
-def getDialog(userId, name):
+async def getDialog(userId, name):
     con = sqlite3.connect('databases/database.db')
     cur = con.cursor()
     result = cur.execute('''SELECT dialog FROM chats
@@ -24,4 +25,10 @@ def getDialog(userId, name):
     return yaml.safe_load(result[0]) if result != (None,) else []
 
 
-
+async def getAllMessages(userId):
+    con = sqlite3.connect('databases/database.db')
+    cur = con.cursor()
+    result = cur.execute('''SELECT id, message_id, message_type FROM messages
+                            WHERE id=?''', (userId,)).fetchall()
+    con.close()
+    return result
